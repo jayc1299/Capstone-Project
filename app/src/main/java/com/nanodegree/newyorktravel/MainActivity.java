@@ -9,22 +9,34 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.nanodegree.newyorktravel.fragments.FragmentAttractions;
+import com.nanodegree.newyorktravel.fragments.FragmentMap;
+import com.nanodegree.newyorktravel.fragments.FragmentReviews;
 
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            FragmentAttractions frag = new FragmentAttractions();
+            Bundle bundle;
+
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    setFragment(frag, getString(R.string.tab_attractions));
+                    FragmentAttractions frag = new FragmentAttractions();
+                    setFragment(frag);
                     return true;
                 case R.id.navigation_dashboard:
-                    setFragment(frag, getString(R.string.tab_map));
+                    FragmentMap fragMap = new FragmentMap();
+                    bundle = new Bundle();
+                    bundle.putString(FragmentMap.TAG_NAME, getString(R.string.tab_map));
+                    fragMap.setArguments(bundle);
+                    setFragment(fragMap);
                     return true;
                 case R.id.navigation_notifications:
-                    setFragment(frag, getString(R.string.tab_reviews));
+                    FragmentReviews fragReviews = new FragmentReviews();
+                    bundle = new Bundle();
+                    bundle.putString(FragmentMap.TAG_NAME, getString(R.string.tab_reviews));
+                    fragReviews.setArguments(bundle);
+                    setFragment(fragReviews);
                     return true;
             }
             return false;
@@ -39,14 +51,11 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        setFragment(new FragmentAttractions(), getString(R.string.tab_attractions));
+        setFragment(new FragmentAttractions());
     }
 
-    private void setFragment(Fragment frag, String name) {
+    private void setFragment(Fragment frag) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Bundle bundle = new Bundle();
-        bundle.putString(FragmentAttractions.TAG_NAME, name);
-        frag.setArguments(bundle);
         ft.replace(R.id.activity_main_container, frag, frag.getClass().getSimpleName());
         ft.commit();
     }
