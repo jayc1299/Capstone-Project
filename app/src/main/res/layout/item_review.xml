@@ -16,11 +16,11 @@
 		android:orientation="horizontal">
 
 		<ImageView
-			android:id="@+id/item_attraction_img"
+			android:id="@+id/item_review_stars"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_vertical"
-			android:padding="@dimen/fragment_attraction_img_padding" />
+			android:padding="@dimen/fragment_reviews_img_padding" />
 
 		<LinearLayout
 			android:layout_width="match_parent"
@@ -28,18 +28,18 @@
 			android:orientation="vertical">
 
 			<TextView
-				android:id="@+id/item_attraction_name"
+				android:id="@+id/item_review_title"
 				style="@style/Header"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:padding="@dimen/fragment_attractions_text_padding"
-				tools:text="Empire State Building" />
+				android:padding="@dimen/fragment_reviews_text_padding"
+				tools:text="I love the ESB" />
 
 			<TextView
-				android:id="@+id/item_attraction_desc"
+				android:id="@+id/item_review_content"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:padding="@dimen/fragment_attractions_text_padding"
+				android:padding="@dimen/fragment_reviews_text_padding"
 				tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
 		</LinearLayout>
 	</LinearLayout>

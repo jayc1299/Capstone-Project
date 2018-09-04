@@ -5,11 +5,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/frag_reviews_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        tools:listitem="@layout/item_review" />
+
     <TextView
-        android:id="@+id/frag_attractions_hello"
-        android:layout_width="wrap_content"
+        android:id="@+id/fragment_reviews_empty"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:layout_margin="20dp"
-        tools:text="Hello" />
+        android:gravity="center"
+        android:visibility="gone"
+        android:padding="@dimen/fragment_reviews_empty_padding"
+        android:text="@string/no_reviews_found" />
 </LinearLayout>

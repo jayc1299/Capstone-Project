@@ -36,11 +36,21 @@ public class FragmentAttractions extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         ArrayList<Attraction> attractions = new ArrayList<>();
-        attractions.add(new Attraction("Empire State Building"));
-        attractions.add(new Attraction("Statue Of Liberty"));
-        attractions.add(new Attraction("Rockerfella Building"));
-        attractions.add(new Attraction("Madison Square Guardens"));
-        attractions.add(new Attraction("Brooklyn Bridge"));
+        Attraction attraction = new Attraction("Empire State Building");
+        attraction.setAttractionDesc("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+        attractions.add(attraction);
+        attraction = new Attraction("Statue Of Liberty");
+        attraction.setAttractionDesc("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+        attractions.add(attraction);
+        attraction = new Attraction("Rockerfella Building");
+        attraction.setAttractionDesc("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+        attractions.add(attraction);
+        attraction = new Attraction("Madison Square Guardens");
+        attraction.setAttractionDesc("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+        attractions.add(attraction);
+        attraction = new Attraction("Brooklyn Bridge");
+        attraction.setAttractionDesc("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+        attractions.add(attraction);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new AttractionsAdapter(attractions);

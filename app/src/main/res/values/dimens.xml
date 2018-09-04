@@ -2,4 +2,11 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="fragment_reviews_empty_padding">20dp</dimen>
+    <dimen name="fragment_reviews_text_padding">5dp</dimen>
+    <dimen name="fragment_reviews_img_padding">20dp</dimen>
+
+    <dimen name="fragment_attractions_text_padding">5dp</dimen>
+    <dimen name="fragment_attraction_img_padding">20dp</dimen>
 </resources>

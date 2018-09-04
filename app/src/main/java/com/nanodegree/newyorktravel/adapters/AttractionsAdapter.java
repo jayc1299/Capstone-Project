@@ -31,6 +31,7 @@ public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.
         Attraction attraction = attractions.get(position);
 
         holder.itemName.setText(attraction.getAttractionName());
+        holder.itemDesc.setText(attraction.getAttractionDesc());
     }
 
     @Override
@@ -41,10 +42,12 @@ public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.
     class AttractionViewHolder extends RecyclerView.ViewHolder{
 
         TextView itemName;
+        TextView itemDesc;
 
         public AttractionViewHolder(View itemView) {
             super(itemView);
             itemName = itemView.findViewById(R.id.item_attraction_name);
+            itemDesc = itemView.findViewById(R.id.item_attraction_desc);
         }
     }
 }
