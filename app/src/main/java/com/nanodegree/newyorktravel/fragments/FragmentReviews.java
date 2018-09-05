@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nanodegree.newyorktravel.R;
 import com.nanodegree.newyorktravel.activities.ActivityReviewDetail;
@@ -28,6 +29,7 @@ public class FragmentReviews extends Fragment {
     private RecyclerView recyclerView;
     private ReviewsAdapter adapter;
     private Spinner attractionSpinner;
+    private View addFabBtn;
 
     @Nullable
     @Override
@@ -37,6 +39,7 @@ public class FragmentReviews extends Fragment {
         emptyView = view.findViewById(R.id.fragment_reviews_empty);
         recyclerView = view.findViewById(R.id.frag_reviews_recycler);
         attractionSpinner = view.findViewById(R.id.fragment_reviews_spinner);
+		addFabBtn = view.findViewById(R.id.fragment_reviews_add_review);
 
         return view;
     }
@@ -75,6 +78,13 @@ public class FragmentReviews extends Fragment {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, simpleAttractions);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         attractionSpinner.setAdapter(dataAdapter);
+
+		addFabBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(getActivity(), "Add Review", Toast.LENGTH_SHORT).show();
+			}
+		});
     }
 
     ReviewsAdapter.ReviewsListener reviewsListener = new ReviewsAdapter.ReviewsListener() {
