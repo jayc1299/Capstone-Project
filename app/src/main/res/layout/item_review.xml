@@ -5,10 +5,10 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:layout_margin="@dimen/list_item_margin"
-	android:orientation="horizontal"
-	android:foreground="?android:attr/selectableItemBackground"
 	android:clickable="true"
 	android:focusable="true"
+	android:foreground="?android:attr/selectableItemBackground"
+	android:orientation="horizontal"
 	card_view:cardCornerRadius="@dimen/card_view_corner_radius"
 	card_view:cardElevation="@dimen/card_view_elevation"
 	card_view:contentPadding="@dimen/card_view_padding">
@@ -18,13 +18,15 @@
 		android:layout_height="wrap_content"
 		android:orientation="horizontal">
 
-		<ImageView
+		<RatingBar
 			android:id="@+id/item_review_stars"
+			style="@style/Base.Widget.AppCompat.RatingBar.Small"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_vertical"
-			tools:src="@drawable/ic_launcher_foreground"
-			android:padding="@dimen/fragment_reviews_img_padding" />
+			android:layout_marginEnd="@dimen/fragment_reviews_img_margin"
+			android:layout_marginRight="@dimen/fragment_reviews_img_margin"
+			android:numStars="5" />
 
 		<LinearLayout
 			android:layout_width="match_parent"
@@ -36,14 +38,19 @@
 				style="@style/Header"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:padding="@dimen/fragment_reviews_text_padding"
+				android:paddingLeft="@dimen/fragment_reviews_text_padding"
+				android:paddingStart="@dimen/fragment_reviews_text_padding"
 				tools:text="I love the ESB" />
 
 			<TextView
 				android:id="@+id/item_review_content"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:padding="@dimen/fragment_reviews_text_padding"
+				android:ellipsize="end"
+				android:maxLines="3"
+				android:paddingLeft="@dimen/fragment_reviews_text_padding"
+				android:paddingStart="@dimen/fragment_reviews_text_padding"
+				android:paddingTop="@dimen/fragment_reviews_text_padding"
 				tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
 		</LinearLayout>
 	</LinearLayout>

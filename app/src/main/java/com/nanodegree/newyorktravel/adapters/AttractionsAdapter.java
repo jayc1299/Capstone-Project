@@ -46,8 +46,8 @@ public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.
         holder.itemDesc.setText(attraction.getDescription());
 
         if(!TextUtils.isEmpty(attraction.getImageUrl())) {
-            int height = context.getResources().getDimensionPixelSize(R.dimen.small_image_height);
-            int width = context.getResources().getDimensionPixelSize(R.dimen.small_image_width);
+            int height = (int) context.getResources().getDimension(R.dimen.small_image_height);
+            int width = (int) context.getResources().getDimension(R.dimen.small_image_width);
             Picasso.get().load(attraction.getImageUrl()).resize(width,height).into(holder.imgView);
             holder.imgView.setContentDescription(attraction.getName());
         }

@@ -1,5 +1,6 @@
 package com.nanodegree.newyorktravel.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.nanodegree.newyorktravel.R;
+import com.nanodegree.newyorktravel.activities.ActivityReviewDetail;
 import com.nanodegree.newyorktravel.adapters.ReviewsAdapter;
 import com.nanodegree.newyorktravel.holders.Review;
 
@@ -45,20 +47,25 @@ public class FragmentReviews extends Fragment {
 
         ArrayList<Review> attractions = new ArrayList<>();
         Review review = new Review();
-        review.setReviewTitle("I love the Empire State");
-        review.setReviewContent("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+        review.setTitle("I love the Empire State");
+        review.setContent("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+        review.setReviewScore(4.5f);
         attractions.add(review);
+
         review = new Review();
-        review.setReviewTitle("I hate the Empire State");
-        review.setReviewContent("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+        review.setTitle("I hate the Empire State");
+        review.setContent("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+		review.setReviewScore(1.5f);
         attractions.add(review);
+
         review = new Review();
-        review.setReviewTitle("Boring Exhibit");
-        review.setReviewContent("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+        review.setTitle("Boring Exhibit");
+		review.setReviewScore(3.0f);
+        review.setContent("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
         attractions.add(review);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new ReviewsAdapter(attractions);
+        adapter = new ReviewsAdapter(reviewsListener, attractions);
         recyclerView.setAdapter(adapter);
 
         List<String> simpleAttractions = new ArrayList<>();
@@ -69,4 +76,13 @@ public class FragmentReviews extends Fragment {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         attractionSpinner.setAdapter(dataAdapter);
     }
+
+    ReviewsAdapter.ReviewsListener reviewsListener = new ReviewsAdapter.ReviewsListener() {
+        @Override
+        public void onReviewClicked(Review review) {
+			Intent intent = new Intent(getActivity(), ActivityReviewDetail.class);
+			intent.putExtra(ActivityReviewDetail.TAG_REVIEW, review);
+			startActivity(intent);
+        }
+    };
 }

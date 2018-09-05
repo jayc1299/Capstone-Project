@@ -25,10 +25,10 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-
-		<activity android:name=".activities.AttractionDetail"
-			android:theme="@style/NoActionBarTheme"
-			android:parentActivityName=".activities.MainActivity">
+		<activity
+			android:name=".activities.AttractionDetail"
+			android:parentActivityName=".activities.MainActivity"
+			android:theme="@style/NoActionBarTheme">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value=".activities.MainActivity" />
@@ -37,5 +37,16 @@
 		<meta-data
 			android:name="com.google.android.geo.API_KEY"
 			android:value="@string/google_maps_key" />
+
+		<activity
+			android:name=".activities.ActivityReviewDetail"
+			android:label="@string/title_activity_review_detail"
+			android:parentActivityName=".activities.MainActivity"
+			android:theme="@style/AppTheme">
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value=".activities.MainActivity" />
+		</activity>
 	</application>
+
 </manifest>
