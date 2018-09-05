@@ -6,4 +6,7 @@
 	<string name="no_reviews_found">Sorry. We can\'t find any reviews.</string>
 	<string name="title_activity_maps">Map</string>
 	<string name="activity_detail_attraction_alt">Attraction image</string>
+	<string name="activity_detail_view_on_map">View On Map</string>
+	<string name="activity_detail_reviews">Reviews</string>
+	<string name="activity_detail_favourites">Favs</string>
 </resources>

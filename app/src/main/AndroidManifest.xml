@@ -27,6 +27,7 @@
 		</activity>
 
 		<activity android:name=".activities.AttractionDetail"
+			android:theme="@style/NoActionBarTheme"
 			android:parentActivityName=".activities.MainActivity">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"

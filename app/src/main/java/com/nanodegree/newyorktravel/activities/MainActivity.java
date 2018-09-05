@@ -1,11 +1,14 @@
 package com.nanodegree.newyorktravel.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.nanodegree.newyorktravel.R;
@@ -15,36 +18,45 @@ import com.nanodegree.newyorktravel.fragments.FragmentReviews;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    FragmentAttractions frag = new FragmentAttractions();
-                    setFragment(frag);
-                    return true;
-                case R.id.navigation_dashboard:
-                    FragmentMap fragMap = new FragmentMap();
-                    setFragment(fragMap);
-                    return true;
-                case R.id.navigation_notifications:
-                    FragmentReviews fragReviews = new FragmentReviews();
-                    setFragment(fragReviews);
-                    return true;
-            }
-            return false;
-        }
-    };
+    public static final String EXTRA_ATTRACTION_ID = "extra_attraction_id";
+    public static final String EXTRA_GOTO_MAP = "extra_goto_map";
+    public static final String EXTRA_GOTO_REVIEWS = "extra_goto_reviews";
+
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+    private BottomNavigationView navigation;
+    private FragmentAttractions fragmentAttractions;
+    private FragmentMap fragmentMap;
+    private FragmentReviews fragmentReviews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        setFragment(new FragmentAttractions());
+        fragmentAttractions = new FragmentAttractions();
+        fragmentMap = new FragmentMap();
+        fragmentReviews = new FragmentReviews();
+
+        setFragment(fragmentAttractions);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //Activity detail may call for a page change.
+        if(resultCode == Activity.RESULT_OK && requestCode == AttractionDetail.ACTIVITY_DETAIL_REQ_CODE && data != null && data.hasExtra(EXTRA_ATTRACTION_ID)){
+            if(data.getBooleanExtra(EXTRA_GOTO_MAP, false)) {
+                setFragment(fragmentMap);
+                navigation.setSelectedItemId(R.id.navigation_map);
+            }else if(data.getBooleanExtra(EXTRA_GOTO_REVIEWS, false)){
+                setFragment(fragmentReviews);
+                navigation.setSelectedItemId(R.id.navigation_reviews);
+            }
+        }
     }
 
     private void setFragment(Fragment frag) {
@@ -52,4 +64,22 @@ public class MainActivity extends AppCompatActivity {
         ft.replace(R.id.activity_main_container, frag, frag.getClass().getSimpleName());
         ft.commit();
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_attractions:
+                    setFragment(fragmentAttractions);
+                    return true;
+                case R.id.navigation_map:
+                    setFragment(fragmentMap);
+                    return true;
+                case R.id.navigation_reviews:
+                    setFragment(fragmentReviews);
+                    return true;
+            }
+            return false;
+        }
+    };
 }

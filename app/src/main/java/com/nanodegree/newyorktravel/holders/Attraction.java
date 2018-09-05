@@ -15,6 +15,14 @@ public class Attraction implements Parcelable {
     public Attraction() {
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public Attraction(String name) {
         this.name = name;
     }

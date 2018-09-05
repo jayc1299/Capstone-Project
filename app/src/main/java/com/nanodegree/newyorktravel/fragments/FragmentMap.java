@@ -29,8 +29,8 @@ public class FragmentMap extends Fragment{
 
         if (mapFragment == null) {
             mapFragment = SupportMapFragment.newInstance();
-            mapFragment.getMapAsync(mapReadyCallback);
         }
+        mapFragment.getMapAsync(mapReadyCallback);
 
         getChildFragmentManager().beginTransaction().replace(R.id.map, mapFragment).commit();
 

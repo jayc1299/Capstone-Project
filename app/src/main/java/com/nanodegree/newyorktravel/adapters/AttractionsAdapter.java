@@ -1,5 +1,6 @@
 package com.nanodegree.newyorktravel.adapters;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -23,8 +24,10 @@ public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.
 
     private ArrayList<Attraction> attractions;
     private AttractionListener listener;
+    private Context context;
 
-    public AttractionsAdapter(ArrayList<Attraction> attractions, AttractionListener attractionListener) {
+    public AttractionsAdapter(Context context, ArrayList<Attraction> attractions, AttractionListener attractionListener) {
+        this.context = context;
         this.attractions = attractions;
         this.listener = attractionListener;
     }
@@ -43,7 +46,9 @@ public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.
         holder.itemDesc.setText(attraction.getDescription());
 
         if(!TextUtils.isEmpty(attraction.getImageUrl())) {
-            Picasso.get().load(attraction.getImageUrl()).resize(300,300).into(holder.imgView);
+            int height = context.getResources().getDimensionPixelSize(R.dimen.small_image_height);
+            int width = context.getResources().getDimensionPixelSize(R.dimen.small_image_width);
+            Picasso.get().load(attraction.getImageUrl()).resize(width,height).into(holder.imgView);
             holder.imgView.setContentDescription(attraction.getName());
         }
 

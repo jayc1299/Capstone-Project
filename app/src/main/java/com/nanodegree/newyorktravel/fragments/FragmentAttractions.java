@@ -1,5 +1,6 @@
 package com.nanodegree.newyorktravel.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -56,8 +57,13 @@ public class FragmentAttractions extends Fragment {
         attractions.add(attraction);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new AttractionsAdapter(attractions, attractionListener);
+        adapter = new AttractionsAdapter(getActivity(), attractions, attractionListener);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     AttractionsAdapter.AttractionListener attractionListener = new AttractionsAdapter.AttractionListener() {
@@ -66,7 +72,7 @@ public class FragmentAttractions extends Fragment {
             if(getActivity() != null && !getActivity().isFinishing()){
                 Intent intent = new Intent(getActivity(), AttractionDetail.class);
                 intent.putExtra(AttractionDetail.TAG_ATTRACTION, attraction);
-                startActivity(intent);
+                getActivity().startActivityForResult(intent, AttractionDetail.ACTIVITY_DETAIL_REQ_CODE);
             }
         }
     };
