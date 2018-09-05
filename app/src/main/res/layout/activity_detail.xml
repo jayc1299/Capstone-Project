@@ -55,6 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2"
+                android:paddingTop="5dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -86,12 +87,23 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <TextView
+                    <ImageView
                         android:id="@+id/activity_detail_btn_favourites"
-                        style="@style/DetailButton"
+                        android:src="@drawable/selector_favourite"
+                        android:padding="15dp"
+                        android:contentDescription="@string/activity_detail_favourites"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <RatingBar
+                        android:id="@+id/activity_detail_star_rating"
+                        style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/activity_detail_favourites" />
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:numStars="5"
+                        android:stepSize="1.0" />
                 </LinearLayout>
             </LinearLayout>
 

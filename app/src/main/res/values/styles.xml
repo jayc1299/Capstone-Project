@@ -21,7 +21,13 @@
 
     <style name="DetailButton">
         <item name="android:textSize">16sp</item>
-        <item name="android:padding">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:layout_margin">5dp</item>
         <item name="android:gravity">center</item>
+        <item name="android:textColor">@drawable/text_selectable</item>
+        <item name="android:background">@drawable/btn_default</item>
     </style>
 </resources>

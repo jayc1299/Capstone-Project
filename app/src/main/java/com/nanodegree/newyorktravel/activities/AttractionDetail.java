@@ -54,6 +54,7 @@ public class AttractionDetail extends AppCompatActivity {
             }
         });
 
+        //Reviews
         findViewById(R.id.activity_detail_btn_reviews).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,10 +66,22 @@ public class AttractionDetail extends AppCompatActivity {
             }
         });
 
+        //Favourites
         findViewById(R.id.activity_detail_btn_favourites).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(AttractionDetail.this, "Add to Favs", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        findViewById(R.id.activity_detail_star_rating).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.putExtra(MainActivity.EXTRA_ATTRACTION_ID, attraction.getId());
+                intent.putExtra(MainActivity.EXTRA_GOTO_REVIEWS, true);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
             }
         });
     }
