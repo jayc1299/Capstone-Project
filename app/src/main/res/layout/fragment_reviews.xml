@@ -5,6 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
+    <Spinner
+        android:id="@+id/fragment_reviews_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dialog"
+        android:layout_marginTop="@dimen/fragment_reviews_spinner_margin_top"
+        android:layout_marginBottom="@dimen/fragment_reviews_spinner_margin"
+        android:layout_gravity="center_horizontal"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/frag_reviews_recycler"
         android:layout_width="match_parent"

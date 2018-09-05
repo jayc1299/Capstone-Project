@@ -47,6 +47,8 @@
 				android:layout_marginLeft="@dimen/fragment_attractions_text_margin"
 				android:layout_marginStart="@dimen/fragment_attractions_text_margin"
 				android:layout_marginTop="@dimen/fragment_attractions_text_margin"
+				android:maxLines="3"
+				android:ellipsize="end"
 				tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
 		</LinearLayout>
 	</LinearLayout>

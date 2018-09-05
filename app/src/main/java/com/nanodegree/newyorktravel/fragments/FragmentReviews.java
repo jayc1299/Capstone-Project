@@ -9,21 +9,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.nanodegree.newyorktravel.R;
-import com.nanodegree.newyorktravel.adapters.AttractionsAdapter;
 import com.nanodegree.newyorktravel.adapters.ReviewsAdapter;
-import com.nanodegree.newyorktravel.holders.Attraction;
 import com.nanodegree.newyorktravel.holders.Review;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class FragmentReviews extends Fragment{
+public class FragmentReviews extends Fragment {
 
     private TextView emptyView;
     private RecyclerView recyclerView;
     private ReviewsAdapter adapter;
+    private Spinner attractionSpinner;
 
     @Nullable
     @Override
@@ -32,6 +34,7 @@ public class FragmentReviews extends Fragment{
 
         emptyView = view.findViewById(R.id.fragment_reviews_empty);
         recyclerView = view.findViewById(R.id.frag_reviews_recycler);
+        attractionSpinner = view.findViewById(R.id.fragment_reviews_spinner);
 
         return view;
     }
@@ -57,5 +60,13 @@ public class FragmentReviews extends Fragment{
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new ReviewsAdapter(attractions);
         recyclerView.setAdapter(adapter);
+
+        List<String> simpleAttractions = new ArrayList<>();
+        simpleAttractions.add("Empire State Building");
+        simpleAttractions.add("Statue Of Liberty");
+        simpleAttractions.add("Central Park");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, simpleAttractions);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        attractionSpinner.setAdapter(dataAdapter);
     }
 }
