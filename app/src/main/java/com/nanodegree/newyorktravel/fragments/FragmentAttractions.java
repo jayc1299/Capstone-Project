@@ -1,5 +1,6 @@
 package com.nanodegree.newyorktravel.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nanodegree.newyorktravel.R;
+import com.nanodegree.newyorktravel.activities.AttractionDetail;
 import com.nanodegree.newyorktravel.adapters.AttractionsAdapter;
 import com.nanodegree.newyorktravel.holders.Attraction;
 
@@ -37,23 +39,35 @@ public class FragmentAttractions extends Fragment {
 
         ArrayList<Attraction> attractions = new ArrayList<>();
         Attraction attraction = new Attraction("Empire State Building");
-        attraction.setAttractionDesc("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+        attraction.setImageUrl("https://guideandgo.com/image/cache/catalog/new-york/products/main-deck-ticket-empire-state-building/empire-state-building-3-1000x1000.jpg");
+        attraction.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
         attractions.add(attraction);
         attraction = new Attraction("Statue Of Liberty");
-        attraction.setAttractionDesc("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+        attraction.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
         attractions.add(attraction);
         attraction = new Attraction("Rockerfella Building");
-        attraction.setAttractionDesc("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+        attraction.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
         attractions.add(attraction);
         attraction = new Attraction("Madison Square Guardens");
-        attraction.setAttractionDesc("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+        attraction.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
         attractions.add(attraction);
         attraction = new Attraction("Brooklyn Bridge");
-        attraction.setAttractionDesc("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+        attraction.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
         attractions.add(attraction);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new AttractionsAdapter(attractions);
+        adapter = new AttractionsAdapter(attractions, attractionListener);
         recyclerView.setAdapter(adapter);
     }
+
+    AttractionsAdapter.AttractionListener attractionListener = new AttractionsAdapter.AttractionListener() {
+        @Override
+        public void onAttractionClicked(Attraction attraction) {
+            if(getActivity() != null && !getActivity().isFinishing()){
+                Intent intent = new Intent(getActivity(), AttractionDetail.class);
+                intent.putExtra(AttractionDetail.TAG_ATTRACTION, attraction);
+                startActivity(intent);
+            }
+        }
+    };
 }

@@ -12,12 +12,18 @@ import com.nanodegree.newyorktravel.holders.Attraction;
 
 import java.util.ArrayList;
 
-public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.AttractionViewHolder>{
+public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.AttractionViewHolder> {
+
+    public interface AttractionListener {
+        void onAttractionClicked(Attraction attraction);
+    }
 
     private ArrayList<Attraction> attractions;
+    private AttractionListener listener;
 
-    public AttractionsAdapter(ArrayList<Attraction> attractions) {
+    public AttractionsAdapter(ArrayList<Attraction> attractions, AttractionListener attractionListener) {
         this.attractions = attractions;
+        this.listener = attractionListener;
     }
 
     @NonNull
@@ -28,10 +34,19 @@ public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull AttractionViewHolder holder, int position) {
-        Attraction attraction = attractions.get(position);
+        final Attraction attraction = attractions.get(position);
 
-        holder.itemName.setText(attraction.getAttractionName());
-        holder.itemDesc.setText(attraction.getAttractionDesc());
+        holder.itemName.setText(attraction.getName());
+        holder.itemDesc.setText(attraction.getDescription());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) {
+                    listener.onAttractionClicked(attraction);
+                }
+            }
+        });
     }
 
     @Override
@@ -39,8 +54,7 @@ public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.
         return attractions.size();
     }
 
-    class AttractionViewHolder extends RecyclerView.ViewHolder{
-
+    class AttractionViewHolder extends RecyclerView.ViewHolder {
         TextView itemName;
         TextView itemDesc;
 
