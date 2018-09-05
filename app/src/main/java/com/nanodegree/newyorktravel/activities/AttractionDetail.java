@@ -2,12 +2,15 @@ package com.nanodegree.newyorktravel.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nanodegree.newyorktravel.R;
 import com.nanodegree.newyorktravel.holders.Attraction;
+import com.squareup.picasso.Picasso;
 
 public class AttractionDetail extends AppCompatActivity {
 
@@ -43,6 +46,12 @@ public class AttractionDetail extends AppCompatActivity {
 
         TextView desc = findViewById(R.id.attraction_detail_description);
         desc.setText(attraction.getDescription());
+        ImageView img = findViewById(R.id.activity_detail_imageview);
+
+        if(!TextUtils.isEmpty(attraction.getImageUrl())) {
+            Picasso.get().load(attraction.getImageUrl()).into(img);
+            img.setContentDescription(attraction.getName());
+        }
     }
 
     private void setTitle(String title){

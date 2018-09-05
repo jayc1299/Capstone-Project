@@ -8,7 +8,7 @@
 	android:orientation="horizontal"
 	card_view:cardCornerRadius="2dp"
 	card_view:cardElevation="5dp"
-	card_view:contentPadding="15dp">
+	card_view:contentPadding="10dp">
 
 	<LinearLayout
 		android:layout_width="match_parent"
@@ -20,7 +20,8 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_vertical"
-			android:padding="@dimen/fragment_attraction_img_padding" />
+			tools:src="@drawable/ic_launcher_foreground"
+			android:contentDescription="@string/activity_detail_attraction_alt" />
 
 		<LinearLayout
 			android:layout_width="match_parent"
@@ -32,14 +33,17 @@
 				style="@style/Header"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:padding="@dimen/fragment_attractions_text_padding"
+				android:layout_marginLeft="@dimen/fragment_attractions_text_margin"
+				android:layout_marginStart="@dimen/fragment_attractions_text_margin"
 				tools:text="Empire State Building" />
 
 			<TextView
 				android:id="@+id/item_attraction_desc"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:padding="@dimen/fragment_attractions_text_padding"
+				android:layout_marginLeft="@dimen/fragment_attractions_text_margin"
+				android:layout_marginStart="@dimen/fragment_attractions_text_margin"
+				android:layout_marginTop="@dimen/fragment_attractions_text_margin"
 				tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
 		</LinearLayout>
 	</LinearLayout>

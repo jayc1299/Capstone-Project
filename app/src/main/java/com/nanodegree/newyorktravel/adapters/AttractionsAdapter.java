@@ -2,13 +2,16 @@ package com.nanodegree.newyorktravel.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nanodegree.newyorktravel.R;
 import com.nanodegree.newyorktravel.holders.Attraction;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -39,6 +42,11 @@ public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.
         holder.itemName.setText(attraction.getName());
         holder.itemDesc.setText(attraction.getDescription());
 
+        if(!TextUtils.isEmpty(attraction.getImageUrl())) {
+            Picasso.get().load(attraction.getImageUrl()).resize(300,300).into(holder.imgView);
+            holder.imgView.setContentDescription(attraction.getName());
+        }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,11 +65,13 @@ public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.
     class AttractionViewHolder extends RecyclerView.ViewHolder {
         TextView itemName;
         TextView itemDesc;
+        ImageView imgView;
 
         public AttractionViewHolder(View itemView) {
             super(itemView);
             itemName = itemView.findViewById(R.id.item_attraction_name);
             itemDesc = itemView.findViewById(R.id.item_attraction_desc);
+            imgView = itemView.findViewById(R.id.item_attraction_img);
         }
     }
 }
