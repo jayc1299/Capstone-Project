@@ -14,19 +14,19 @@ allows you to add favourite attractions so they can be quickly found.
 <h3>Google Maps Key</h3>
 This project requires a Google Maps Key. You should add a file named <i>google_maps_api.xml</i> to your app/res/values folder.
 Inside this file must live a value named <i>google_maps_key</i> with a maps key for your project.
-The maps key must be set up in the Google API dashboard to allow:
-- com.nanodegree.newyorktravel
-- Your debug and release key SHA1s.
+The maps key must be set up in the Google API dashboard to allow:<br />
+- com.nanodegree.newyorktravel<br />
+- Your debug and release key SHA1s.<br />
 
 <h3>Firebase Config</h3>
 This project requires a Firebase config file with realtime database link. This google-services.json file should live in the app/ folder.
-It has not been provided for security reasons.
+It has not been provided for security reasons.<br />
 A newyorktravel.json firebase realtime database json export has been provided to create the database.
 
 <h3>Images</h3>
 Apple image is creative common license<br />
 https://www.publicdomainpictures.net/en/view-image.php?image=37301&picture=red-apple-clipart<br />
-All icons are used from the excellent Google Material Icons resource.
+All icons are used from the excellent Google Material Icons resource.<br />
 All images are used without license for demonstration purposes only.
 
 <h3>Release Key</h3>
