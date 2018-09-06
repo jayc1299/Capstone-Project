@@ -8,6 +8,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -15,6 +16,9 @@ import com.nanodegree.newyorktravel.R;
 import com.nanodegree.newyorktravel.fragments.FragmentAttractions;
 import com.nanodegree.newyorktravel.fragments.FragmentMap;
 import com.nanodegree.newyorktravel.fragments.FragmentReviews;
+import com.nanodegree.newyorktravel.utils.UserUtils;
+
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,11 +32,15 @@ public class MainActivity extends AppCompatActivity {
     private FragmentAttractions fragmentAttractions;
     private FragmentMap fragmentMap;
     private FragmentReviews fragmentReviews;
+    private UserUtils userUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        userUtils = new UserUtils();
+        createUserId();
 
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -68,10 +76,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Set the currently displayed fragment
+     *
+     * @param frag fragment to display
+     */
     private void setFragment(Fragment frag) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.activity_main_container, frag, frag.getClass().getSimpleName());
         ft.commit();
+    }
+
+    /**
+     * This is only a temp userId as a full authentication session is outside the scope of this task.
+     */
+    private void createUserId(){
+        Log.d(TAG, "createUserId: " + userUtils.getUserId(this));
+        if (TextUtils.isEmpty(userUtils.getUserId(this))) {
+            userUtils.setUserId(this, UUID.randomUUID().toString());
+        }
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {

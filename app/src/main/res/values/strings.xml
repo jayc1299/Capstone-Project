@@ -18,4 +18,6 @@
 	<string name="review_no_content">Please enter some review content</string>
 	<string name="review_add_success_title">Review Added</string>
 	<string name="review_add_success_content">Review successfully added</string>
+	<string name="toast_favourite_toggle">Favourite Attraction Toggled</string>
+    <string name="title_activity_settings">Settings</string>
 </resources>

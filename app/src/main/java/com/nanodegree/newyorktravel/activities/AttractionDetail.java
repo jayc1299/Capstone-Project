@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,10 +23,11 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.nanodegree.newyorktravel.R;
 import com.nanodegree.newyorktravel.holders.Attraction;
+import com.nanodegree.newyorktravel.holders.FavouriteAttraction;
 import com.nanodegree.newyorktravel.holders.Review;
+import com.nanodegree.newyorktravel.utils.UserUtils;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,23 +38,37 @@ public class AttractionDetail extends AppCompatActivity {
     private static final String TAG = AttractionDetail.class.getSimpleName();
 
     private Attraction attraction;
+    private FirebaseDatabase database;
+    private DatabaseReference favsRef;
+    private UserUtils userUtils;
+
+    private ImageView favouriteView;
+    private RatingBar starRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        database = FirebaseDatabase.getInstance();
+        favsRef = database.getReference("favouriteAttractions");
+        userUtils = new UserUtils();
+
+        favouriteView = findViewById(R.id.activity_detail_btn_favourites);
+        starRating = findViewById(R.id.activity_detail_star_rating);
+
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        if(getSupportActionBar() != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        if(getIntent() != null && getIntent().getExtras() != null){
+        if (getIntent() != null && getIntent().getExtras() != null) {
             Bundle bundle = getIntent().getExtras();
 
             attraction = bundle.getParcelable(TAG_ATTRACTION);
             setupAttraction(attraction);
             getReviews();
+            showFavouriteStatus();
         }
 
         //Map button
@@ -82,14 +96,14 @@ public class AttractionDetail extends AppCompatActivity {
         });
 
         //Favourites
-        findViewById(R.id.activity_detail_btn_favourites).setOnClickListener(new View.OnClickListener() {
+        favouriteView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AttractionDetail.this, "Add to Favs", Toast.LENGTH_SHORT).show();
+                updateFavouriteStatus();
             }
         });
 
-        findViewById(R.id.activity_detail_star_rating).setOnClickListener(new View.OnClickListener() {
+        starRating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
@@ -112,27 +126,99 @@ public class AttractionDetail extends AppCompatActivity {
         }
     }
 
-    private void setupAttraction(Attraction attraction){
+    private void setupAttraction(Attraction attraction) {
         setTitle(attraction.getName());
 
         TextView desc = findViewById(R.id.attraction_detail_description);
         desc.setText(attraction.getDescription());
         ImageView img = findViewById(R.id.activity_detail_imageview);
 
-        if(!TextUtils.isEmpty(attraction.getImageUrl())) {
+        if (!TextUtils.isEmpty(attraction.getImageUrl())) {
             Picasso.get().load(attraction.getImageUrl()).into(img);
             img.setContentDescription(attraction.getName());
         }
     }
 
-    private void setTitle(String title){
-        CollapsingToolbarLayout collapsingToolbarLayout =  findViewById(R.id.collapsing_toolbar);
+    private void setTitle(String title) {
+        CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle(title);
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
     }
 
+    private void updateFavouriteStatus() {
+        //Get only favourites for this user.
+        Query favsQuery = favsRef.orderByChild("userId").equalTo(userUtils.getUserId(this));
+
+        favsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                DatabaseReference dbRowreference = null;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    FavouriteAttraction favouriteAttraction = snapshot.getValue(FavouriteAttraction.class);
+                    //Is the attraction this attraction adn is it a favourite
+                    if (favouriteAttraction != null) {
+                        if (favouriteAttraction.getAttractionId().equals(attraction.getId())) {
+                            dbRowreference = snapshot.getRef();
+                        }
+                    }
+                }
+
+                //db row already exists, let's update.
+                if (dbRowreference != null) {
+                    Map<String, Object> postValues = new HashMap<>();
+                    postValues.put("isFavourite", !favouriteView.isSelected());
+                    dbRowreference.updateChildren(postValues);
+                } else {
+                    //create new db row.
+                    FavouriteAttraction favouriteAttraction = new FavouriteAttraction(attraction);
+                    favouriteAttraction.setUserId(userUtils.getUserId(AttractionDetail.this));
+                    favouriteAttraction.setIsFavourite(!favouriteView.isSelected());
+                    favouriteAttraction.setAttractionId(attraction.getId());
+
+                    String key = favsRef.push().getKey();
+                    Map<String, Object> postValues = favouriteAttraction.toMap();
+
+                    Map<String, Object> childUpdates = new HashMap<>();
+                    childUpdates.put("/" + key, postValues);
+                    favsRef.updateChildren(childUpdates);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: ", databaseError.toException());
+            }
+        });
+    }
+
+    private void showFavouriteStatus() {
+        //Get only favourites for this user.
+        Query favsQuery = favsRef.orderByChild("userId").equalTo(userUtils.getUserId(this));
+
+        favsQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                boolean isFavourite = false;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    FavouriteAttraction favouriteAttraction = snapshot.getValue(FavouriteAttraction.class);
+                    //Is the attraction this attraction adn is it a favourite
+                    if (favouriteAttraction != null) {
+                        if (favouriteAttraction.getIsFavourite() && favouriteAttraction.getAttractionId().equals(attraction.getId())) {
+                            isFavourite = true;
+                        }
+                    }
+                }
+                favouriteView.setSelected(isFavourite);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: ", databaseError.toException());
+            }
+        });
+    }
+
     private void getReviews() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reviewRef = database.getReference("reviews");
         Query reviewQuery = reviewRef.orderByChild("attractionId").equalTo(attraction.getId());
 
@@ -147,7 +233,7 @@ public class AttractionDetail extends AppCompatActivity {
                     }
                 }
 
-                ((RatingBar) findViewById(R.id.activity_detail_star_rating)).setRating(totalScore);
+                starRating.setRating(totalScore);
             }
 
             @Override
