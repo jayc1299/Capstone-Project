@@ -17,3 +17,7 @@ Inside this file must live a value named <i>google_maps_key</i> with a maps key 
 
 <h3>Firebase Config</h3>
 This project requires a Firebase config file with realtime database link. This google-services.json file should live in the app/ folder.
+
+<h3>Images</h3>
+Apple image is creative common license<br />
+https://www.publicdomainpictures.net/en/view-image.php?image=37301&picture=red-apple-clipart
