@@ -9,7 +9,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
-		android:padding="10dp">
+		android:padding="@dimen/activity_review_detail_padding">
 
 		<RatingBar
 			android:id="@+id/review_detail_star_rating"
@@ -23,14 +23,14 @@
 			style="@style/Header"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="10dp"
+			android:layout_marginTop="@dimen/activity_review_detail_margin"
 			tools:text="I love the Empire State" />
 
 		<TextView
 			android:id="@+id/review_detail_content"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="20dp"
+			android:layout_marginTop="@dimen/activity_review_detail_content_margin"
 			tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
 	</LinearLayout>
 </ScrollView>

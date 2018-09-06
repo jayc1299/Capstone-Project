@@ -10,6 +10,14 @@
 	<dimen name="fragment_attractions_text_margin">10dp</dimen>
 
 	<dimen name="activity_detail_text_padding">5dp</dimen>
+	<dimen name="activity_detail_image_height">200dp</dimen>
+	<dimen name="activity_detail_collapsing_margin">64dp</dimen>
+	<dimen name="activity_detail_collapsing_margin_start">48dp</dimen>
+
+	<dimen name="activity_review_detail_padding">10dp</dimen>
+	<dimen name="activity_review_detail_margin">10dp</dimen>
+	<dimen name="activity_review_detail_content_margin">20dp</dimen>
+	<dimen name="activity_review_detail_img_padding">15dp</dimen>
 
 	<dimen name="small_image_height">100dp</dimen>
 	<dimen name="small_image_width">100dp</dimen>
