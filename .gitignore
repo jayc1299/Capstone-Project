@@ -51,6 +51,9 @@ captures/
 
 # Google Services (e.g. APIs or Firebase)
 google-services.json
+/gradle.properties
+.gradle.properties
+gradle.properties
 
 # Freeline
 freeline.py
