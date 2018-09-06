@@ -6,12 +6,14 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -33,6 +35,8 @@ import com.nanodegree.newyorktravel.utils.UiUitls;
 public class FragmentMap extends Fragment {
 
 	private static final String TAG = FragmentMap.class.getSimpleName();
+	private static final int MY_LOCATION_REQUEST_CODE = 3;
+
 	private GoogleMap mMap;
 	private SupportMapFragment mapFragment;
 	private String changeSelectedAttractionRequestId;
@@ -86,6 +90,10 @@ public class FragmentMap extends Fragment {
 			FirebaseDatabase database = FirebaseDatabase.getInstance();
 			DatabaseReference attractionRef = database.getReference("attractions");
 
+			//Go ask for permission to view user's location
+			checkPermission();
+
+			//Get attractions & load markers
 			attractionRef.addValueEventListener(new ValueEventListener() {
 				@Override
 				public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -129,4 +137,32 @@ public class FragmentMap extends Fragment {
 			getActivity().startActivityForResult(intent, AttractionDetail.ACTIVITY_DETAIL_REQ_CODE);
 		}
 	};
+
+	private void checkPermission() {
+		if(getActivity() != null && !getActivity().isFinishing()) {
+			if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+				mMap.setMyLocationEnabled(true);
+			} else {
+				ActivityCompat.requestPermissions(getActivity(),
+						new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+						MY_LOCATION_REQUEST_CODE);
+
+			}
+		}
+	}
+
+	@Override
+	@SuppressWarnings({"MissingPermission"})
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		if (requestCode == MY_LOCATION_REQUEST_CODE) {
+			if (permissions.length == 1 &&
+					permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION &&
+					grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+				mMap.setMyLocationEnabled(true);
+			} else {
+				// Permission was denied. Display an error message.
+				Toast.makeText(getActivity(), getString(R.string.location_denied_error_msg), Toast.LENGTH_SHORT).show();
+			}
+		}
+	}
 }
