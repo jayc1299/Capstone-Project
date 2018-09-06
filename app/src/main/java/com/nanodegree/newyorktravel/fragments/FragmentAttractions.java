@@ -3,6 +3,7 @@ package com.nanodegree.newyorktravel.fragments;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,6 +25,7 @@ import com.nanodegree.newyorktravel.R;
 import com.nanodegree.newyorktravel.activities.AttractionDetail;
 import com.nanodegree.newyorktravel.adapters.AttractionsAdapter;
 import com.nanodegree.newyorktravel.holders.Attraction;
+import com.nanodegree.newyorktravel.utils.UiUitls;
 import com.nanodegree.newyorktravel.utils.UserUtils;
 
 import java.util.ArrayList;
@@ -36,6 +38,10 @@ public class FragmentAttractions extends Fragment {
     private SharedPreferences mPrefs;
     private UserUtils userUtils;
     private FirebaseDatabase database;
+    private UiUitls uiUitls;
+
+	private static final String SAVED_LAYOUT_MANAGER = "saved_layout_manager";
+	private Parcelable layoutManagerSavedState;
 
     @Nullable
     @Override
@@ -54,6 +60,7 @@ public class FragmentAttractions extends Fragment {
         database = FirebaseDatabase.getInstance();
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         userUtils = new UserUtils();
+        uiUitls = new UiUitls();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new AttractionsAdapter(getActivity(), new ArrayList<Attraction>(), attractionListener);
@@ -65,6 +72,21 @@ public class FragmentAttractions extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        Parcelable state = recyclerView.getLayoutManager().onSaveInstanceState();
+        outState.putParcelable(SAVED_LAYOUT_MANAGER, state);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            layoutManagerSavedState = savedInstanceState.getParcelable(SAVED_LAYOUT_MANAGER);
+        }
     }
 
     private boolean isShowFavourites() {
@@ -96,11 +118,16 @@ public class FragmentAttractions extends Fragment {
                 }
             }
             adapter.updateAttractions(attractions);
+
+			if (layoutManagerSavedState != null) {
+				recyclerView.getLayoutManager().onRestoreInstanceState(layoutManagerSavedState);
+			}
         }
 
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
             Log.e(TAG, "onCancelled: ", databaseError.toException());
+			uiUitls.showErrorAlert(getActivity(), databaseError.toException());
         }
     };
 

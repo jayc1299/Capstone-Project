@@ -2,6 +2,7 @@ package com.nanodegree.newyorktravel.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,7 @@ import com.nanodegree.newyorktravel.activities.ActivityReviewDetail;
 import com.nanodegree.newyorktravel.adapters.ReviewsAdapter;
 import com.nanodegree.newyorktravel.holders.Attraction;
 import com.nanodegree.newyorktravel.holders.Review;
+import com.nanodegree.newyorktravel.utils.UiUitls;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +49,11 @@ public class FragmentReviews extends Fragment {
     private ArrayList<Attraction> attractions;
     private Attraction selectedAttraction;
     private String changeSelectedAttractionRequestId;
+    private UiUitls uiUitls;
+
+	private static final String SAVED_LAYOUT_MANAGER = "saved_layout_manager";
+	private static final String SAVED_SELECTED_ATTRACION = "saved_selected_attraction";
+	private Parcelable layoutManagerSavedState;
 
     @Nullable
     @Override
@@ -66,12 +73,11 @@ public class FragmentReviews extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         database = FirebaseDatabase.getInstance();
+        uiUitls = new UiUitls();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         reviewsAdapter = new ReviewsAdapter(reviewsListener, new ArrayList<Review>());
         recyclerView.setAdapter(reviewsAdapter);
-
-        setupAttractionSpinner();
 
         addFabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +86,26 @@ public class FragmentReviews extends Fragment {
                 startActivity(intent);
             }
         });
+
+		setupAttractionSpinner();
     }
+
+	@Override
+	public void onSaveInstanceState(@NonNull Bundle outState) {
+		Parcelable state = recyclerView.getLayoutManager().onSaveInstanceState();
+		outState.putParcelable(SAVED_LAYOUT_MANAGER, state);
+		outState.putString(SAVED_SELECTED_ATTRACION, selectedAttraction.getId());
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+		super.onViewStateRestored(savedInstanceState);
+		if (savedInstanceState != null) {
+			layoutManagerSavedState = savedInstanceState.getParcelable(SAVED_LAYOUT_MANAGER);
+			changeSelectedAttractionRequestId = savedInstanceState.getString(SAVED_SELECTED_ATTRACION, "");
+		}
+	}
 
     /**
      * Other components need to tell the fragment what attraction to set as selected
@@ -91,7 +116,10 @@ public class FragmentReviews extends Fragment {
         changeSelectedAttractionRequestId = attractionId;
     }
 
-    private void setupAttractionSpinner() {
+	/**
+	 * Setup the spinner with attractions
+	 */
+	private void setupAttractionSpinner() {
         dataAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, new ArrayList<String>());
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         attractionSpinner.setAdapter(dataAdapter);
@@ -129,6 +157,7 @@ public class FragmentReviews extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e(TAG, "onCancelled: ", databaseError.toException());
+				uiUitls.showErrorAlert(getActivity(), databaseError.toException());
             }
         });
 
@@ -170,11 +199,16 @@ public class FragmentReviews extends Fragment {
                     emptyView.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
                 }
+
+				if (layoutManagerSavedState != null) {
+					recyclerView.getLayoutManager().onRestoreInstanceState(layoutManagerSavedState);
+				}
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e(TAG, "onCancelled: ", databaseError.toException());
+				uiUitls.showErrorAlert(getActivity(), databaseError.toException());
             }
         });
     }

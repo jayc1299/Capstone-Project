@@ -45,11 +45,13 @@ public class MainActivity extends AppCompatActivity {
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        fragmentAttractions = new FragmentAttractions();
-        fragmentMap = new FragmentMap();
-        fragmentReviews = new FragmentReviews();
+		fragmentAttractions = new FragmentAttractions();
+		fragmentMap = new FragmentMap();
+		fragmentReviews = new FragmentReviews();
 
-        setFragment(fragmentAttractions);
+        if (savedInstanceState == null) {
+            setFragment(fragmentAttractions);
+        }
     }
 
     @Override

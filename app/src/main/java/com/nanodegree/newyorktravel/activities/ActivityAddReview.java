@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.nanodegree.newyorktravel.R;
 import com.nanodegree.newyorktravel.holders.Attraction;
 import com.nanodegree.newyorktravel.holders.Review;
+import com.nanodegree.newyorktravel.utils.UiUitls;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +50,7 @@ public class ActivityAddReview extends AppCompatActivity {
     private ArrayAdapter<String> dataAdapter;
     private ArrayList<Attraction> attractions;
     private Attraction selectedAttraction;
+    private UiUitls uiUitls;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class ActivityAddReview extends AppCompatActivity {
         starRating = findViewById(R.id.add_review_star_rating);
 
         database = FirebaseDatabase.getInstance();
+        uiUitls = new UiUitls();
 
         setupAttractionSpinner();
         setupUI();
@@ -158,6 +161,7 @@ public class ActivityAddReview extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e(TAG, "onCancelled: ", databaseError.toException());
+                uiUitls.showErrorAlert(ActivityAddReview.this, databaseError.toException());
             }
         });
 

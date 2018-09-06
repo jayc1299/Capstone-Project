@@ -25,6 +25,7 @@ import com.nanodegree.newyorktravel.R;
 import com.nanodegree.newyorktravel.holders.Attraction;
 import com.nanodegree.newyorktravel.holders.FavouriteAttraction;
 import com.nanodegree.newyorktravel.holders.Review;
+import com.nanodegree.newyorktravel.utils.UiUitls;
 import com.nanodegree.newyorktravel.utils.UserUtils;
 import com.squareup.picasso.Picasso;
 
@@ -41,6 +42,7 @@ public class AttractionDetail extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference favsRef;
     private UserUtils userUtils;
+    private UiUitls uiUitls;
 
     private ImageView favouriteView;
     private RatingBar starRating;
@@ -53,6 +55,7 @@ public class AttractionDetail extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         favsRef = database.getReference("favouriteAttractions");
         userUtils = new UserUtils();
+        uiUitls = new UiUitls();
 
         favouriteView = findViewById(R.id.activity_detail_btn_favourites);
         starRating = findViewById(R.id.activity_detail_star_rating);
@@ -187,6 +190,7 @@ public class AttractionDetail extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e(TAG, "onCancelled: ", databaseError.toException());
+                uiUitls.showErrorAlert(AttractionDetail.this, databaseError.toException());
             }
         });
     }
@@ -214,6 +218,7 @@ public class AttractionDetail extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e(TAG, "onCancelled: ", databaseError.toException());
+                uiUitls.showErrorAlert(AttractionDetail.this, databaseError.toException());
             }
         });
     }
@@ -239,6 +244,7 @@ public class AttractionDetail extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e(TAG, "onCancelled: ", databaseError.toException());
+                uiUitls.showErrorAlert(AttractionDetail.this, databaseError.toException());
             }
         });
     }

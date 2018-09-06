@@ -19,11 +19,11 @@
 	<string name="review_add_success_title">Review Added</string>
 	<string name="review_add_success_content">Review successfully added</string>
 	<string name="toast_favourite_toggle">Favourite Attraction Toggled</string>
-    <string name="title_activity_settings">Settings</string>
+	<string name="title_activity_settings">Settings</string>
 
-	<string name="pref_sort_key" translatable="false">sort_order</string>
-	<string name="pref_sort_label">Sort Order</string>
-	<string name="pref_sort_default" translatable="false">popularity.desc</string>
+    <string name="unkown_error_title">Error</string>
+    <string name="unknown_error_msg">Sorry there has been an unkown error.</string>
+
 	<string name="pref_favs_key" translatable="false">show_favourites</string>
 	<string name="pref_favs_title">Show Favourites</string>
 	<string name="pref_favs_label">Show only a list of your favourite attractions</string>
