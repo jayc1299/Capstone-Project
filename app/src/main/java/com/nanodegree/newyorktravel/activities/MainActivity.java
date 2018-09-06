@@ -50,9 +50,18 @@ public class MainActivity extends AppCompatActivity {
         //Activity detail may call for a page change.
         if(resultCode == Activity.RESULT_OK && requestCode == AttractionDetail.ACTIVITY_DETAIL_REQ_CODE && data != null && data.hasExtra(EXTRA_ATTRACTION_ID)){
             if(data.getBooleanExtra(EXTRA_GOTO_MAP, false)) {
+                if(data.hasExtra(EXTRA_ATTRACTION_ID)) {
+                    String selectedAttractionId = data.getStringExtra(EXTRA_ATTRACTION_ID);
+                    fragmentMap.setSelectedAttraction(selectedAttractionId);
+                }
                 setFragment(fragmentMap);
                 navigation.setSelectedItemId(R.id.navigation_map);
             }else if(data.getBooleanExtra(EXTRA_GOTO_REVIEWS, false)){
+                //We pass through an attraction ID, to tell the fragment what attraction to select.
+                if(data.hasExtra(EXTRA_ATTRACTION_ID)) {
+                    String selectedAttractionId = data.getStringExtra(EXTRA_ATTRACTION_ID);
+                    fragmentReviews.setSelectedAttraction(selectedAttractionId);
+                }
                 setFragment(fragmentReviews);
                 navigation.setSelectedItemId(R.id.navigation_reviews);
             }

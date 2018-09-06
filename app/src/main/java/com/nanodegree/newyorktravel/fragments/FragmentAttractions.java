@@ -58,7 +58,10 @@ public class FragmentAttractions extends Fragment {
                 ArrayList<Attraction> attractions = new ArrayList<>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     Attraction attraction = postSnapshot.getValue(Attraction.class);
-                    attractions.add(attraction);
+                    if(attraction != null) {
+                        attraction.setId(postSnapshot.getKey());
+                        attractions.add(attraction);
+                    }
                 }
                 adapter.updateAttractions(attractions);
             }

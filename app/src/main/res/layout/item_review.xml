@@ -26,6 +26,7 @@
 			android:layout_gravity="center_vertical"
 			android:layout_marginEnd="@dimen/fragment_reviews_img_margin"
 			android:layout_marginRight="@dimen/fragment_reviews_img_margin"
+			android:isIndicator="true"
 			android:numStars="5" />
 
 		<LinearLayout

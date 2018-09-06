@@ -46,6 +46,7 @@ public class FragmentReviews extends Fragment {
     private ArrayAdapter<String> dataAdapter;
     private ArrayList<Attraction> attractions;
     private Attraction selectedAttraction;
+    private String changeSelectedAttractionRequestId;
 
     @Nullable
     @Override
@@ -81,6 +82,15 @@ public class FragmentReviews extends Fragment {
         });
     }
 
+    /**
+     * Other components need to tell the fragment what attraction to set as selected
+     *
+     * @param attractionId attraction ID.
+     */
+    public void setSelectedAttraction(String attractionId){
+        changeSelectedAttractionRequestId = attractionId;
+    }
+
     private void setupAttractionSpinner() {
         dataAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, new ArrayList<String>());
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -93,12 +103,18 @@ public class FragmentReviews extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<String> simpleAttractions = new ArrayList<>();
                 attractions = new ArrayList<>();
+                int i = 0;
+                int selectedIndex = 0;
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Attraction attraction = postSnapshot.getValue(Attraction.class);
                     if (attraction != null) {
                         attraction.setId(postSnapshot.getKey());
                         simpleAttractions.add(attraction.getName());
                         attractions.add(attraction);
+                        if(changeSelectedAttractionRequestId != null && attraction.getId().equals(changeSelectedAttractionRequestId)){
+                            selectedIndex = i;
+                        }
+                        i++;
                     }
                 }
 
@@ -106,10 +122,8 @@ public class FragmentReviews extends Fragment {
                 dataAdapter.clear();
                 dataAdapter.addAll(simpleAttractions);
                 dataAdapter.notifyDataSetChanged();
-                //Set the selected attraction to first attraction in list.
-                if (attractions.size() > 0) {
-                    selectedAttraction = attractions.get(0);
-                }
+
+                attractionSpinner.setSelection(selectedIndex);
             }
 
             @Override

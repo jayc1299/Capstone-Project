@@ -1,24 +1,18 @@
 <resources>
 	<!-- Default screen margins, per the Android Design guidelines. -->
-	<dimen name="activity_horizontal_margin">16dp</dimen>
-	<dimen name="activity_vertical_margin">16dp</dimen>
-
 	<dimen name="fragment_reviews_empty_padding">20dp</dimen>
 	<dimen name="fragment_reviews_text_padding">5dp</dimen>
 	<dimen name="fragment_reviews_img_margin">5dp</dimen>
 	<dimen name="fragment_reviews_spinner_margin_top">20dp</dimen>
 	<dimen name="fragment_reviews_spinner_margin">10dp</dimen>
+	<dimen name="fragment_reviews_fab_margin">20dp</dimen>
 
 	<dimen name="fragment_attractions_text_margin">10dp</dimen>
-	<dimen name="fragment_attraction_img_padding">5dp</dimen>
 
 	<dimen name="activity_detail_text_padding">5dp</dimen>
 
 	<dimen name="small_image_height">100dp</dimen>
 	<dimen name="small_image_width">100dp</dimen>
-
-	<dimen name="large_image_height">300dp</dimen>
-	<dimen name="large_image_width">500dp</dimen>
 
 	<dimen name="btn_shape_line_width">3dp</dimen>
 	<dimen name="btn_shape_corner_radius">5dp</dimen>
@@ -28,7 +22,7 @@
 	<dimen name="card_view_corner_radius">2dp</dimen>
 	<dimen name="card_view_elevation">5dp</dimen>
 	<dimen name="card_view_padding">10dp</dimen>
-	<dimen name="fab_margin">16dp</dimen>
 
 	<dimen name="add_review_margins">20dp</dimen>
+	<dimen name="add_review_padding">16dp</dimen>
 </resources>
