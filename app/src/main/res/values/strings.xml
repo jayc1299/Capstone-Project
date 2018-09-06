@@ -3,11 +3,19 @@
 	<string name="tab_attractions">Attractions</string>
 	<string name="tab_map">Maps</string>
 	<string name="tab_reviews">Reviews</string>
-	<string name="no_reviews_found">Sorry. We can\'t find any reviews.</string>
+	<string name="no_reviews_found">Sorry. We can\'t find any reviews for that attraction.</string>
 	<string name="title_activity_maps">Map</string>
 	<string name="activity_detail_attraction_alt">Attraction image</string>
 	<string name="activity_detail_view_on_map">View On Map</string>
 	<string name="activity_detail_reviews">Reviews</string>
 	<string name="activity_detail_favourites">Favourites</string>
-	<string name="title_activity_review_detail">Activity Review Detail</string>
+	<string name="title_activity_review_detail">Review Detail</string>
+	<string name="title_activity_add_review">Add Review</string>
+	<string name="review_title">Review Title</string>
+	<string name="review_content">Review</string>
+	<string name="save_review">Save Review</string>
+	<string name="review_no_title">Please enter a review title</string>
+	<string name="review_no_content">Please enter some review content</string>
+	<string name="review_add_success_title">Review Added</string>
+	<string name="review_add_success_content">Review successfully added</string>
 </resources>

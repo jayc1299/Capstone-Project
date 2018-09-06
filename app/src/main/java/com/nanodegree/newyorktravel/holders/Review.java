@@ -3,8 +3,14 @@ package com.nanodegree.newyorktravel.holders;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Review implements Parcelable {
 
+	@Exclude
 	private String reviewId;
 	private String title;
 	private String content;
@@ -88,4 +94,15 @@ public class Review implements Parcelable {
 			return new Review[size];
 		}
 	};
+
+	@Exclude
+	public Map<String, Object> toMap() {
+		HashMap<String, Object> result = new HashMap<>();
+		result.put("title", title);
+		result.put("content", content);
+		result.put("reviewScore", reviewScore);
+		result.put("attractionId", attractionId);
+
+		return result;
+	}
 }

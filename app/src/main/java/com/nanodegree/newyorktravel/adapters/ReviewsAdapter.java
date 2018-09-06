@@ -56,6 +56,11 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.Attracti
 		return reviews.size();
 	}
 
+	public void updateReviews(ArrayList<Review> reviews){
+		this.reviews = reviews;
+		notifyDataSetChanged();
+	}
+
 	class AttractionViewHolder extends RecyclerView.ViewHolder {
 
 		TextView itemTitle;
