@@ -8,10 +8,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.nanodegree.newyorktravel.R;
 import com.nanodegree.newyorktravel.activities.AttractionDetail;
 import com.nanodegree.newyorktravel.adapters.AttractionsAdapter;
@@ -21,6 +27,7 @@ import java.util.ArrayList;
 
 public class FragmentAttractions extends Fragment {
 
+    private static final String TAG = FragmentAttractions.class.getSimpleName();
     private RecyclerView recyclerView;
     private AttractionsAdapter adapter;
 
@@ -38,27 +45,29 @@ public class FragmentAttractions extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ArrayList<Attraction> attractions = new ArrayList<>();
-        Attraction attraction = new Attraction("Empire State Building");
-        attraction.setImageUrl("https://guideandgo.com/image/cache/catalog/new-york/products/main-deck-ticket-empire-state-building/empire-state-building-3-1000x1000.jpg");
-        attraction.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
-        attractions.add(attraction);
-        attraction = new Attraction("Statue Of Liberty");
-        attraction.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
-        attractions.add(attraction);
-        attraction = new Attraction("Rockerfella Building");
-        attraction.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
-        attractions.add(attraction);
-        attraction = new Attraction("Madison Square Guardens");
-        attraction.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
-        attractions.add(attraction);
-        attraction = new Attraction("Brooklyn Bridge");
-        attraction.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \n\n Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
-        attractions.add(attraction);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference attractionRef = database.getReference("attractions");
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new AttractionsAdapter(getActivity(), attractions, attractionListener);
+        adapter = new AttractionsAdapter(getActivity(), new ArrayList<Attraction>(), attractionListener);
         recyclerView.setAdapter(adapter);
+
+        attractionRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<Attraction> attractions = new ArrayList<>();
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    Attraction attraction = postSnapshot.getValue(Attraction.class);
+                    attractions.add(attraction);
+                }
+                adapter.updateAttractions(attractions);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: ", databaseError.toException());
+            }
+        });
     }
 
     @Override

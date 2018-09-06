@@ -14,3 +14,6 @@ allows you to add favourite attractions so they can be quickly found.
 <h3>Google Maps Key</h3>
 This project requires a Google Maps Key. You should add a file named <i>google_maps_api.xml</i> to your app/res/values folder.
 Inside this file must live a value named <i>google_maps_key</i> with a maps key for your project.
+
+<h3>Firebase Config</h3>
+This project requires a Firebase config file with realtime database link. This google-services.json file should live in the app/ folder.

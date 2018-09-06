@@ -67,6 +67,11 @@ public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.
         return attractions.size();
     }
 
+    public void updateAttractions(ArrayList<Attraction> attractions){
+        this.attractions = attractions;
+        notifyDataSetChanged();
+    }
+
     class AttractionViewHolder extends RecyclerView.ViewHolder {
         TextView itemName;
         TextView itemDesc;

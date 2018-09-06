@@ -3,14 +3,20 @@ package com.nanodegree.newyorktravel.holders;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Attraction implements Parcelable {
 
+    @Exclude
     private String id;
     private String name;
     private String description;
     private String imageUrl;
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
 
     public Attraction() {
     }
@@ -51,6 +57,22 @@ public class Attraction implements Parcelable {
         this.imageUrl = imageUrl;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
     protected Attraction(Parcel in) {
         id = in.readString();
         name = in.readString();
@@ -71,8 +93,8 @@ public class Attraction implements Parcelable {
         dest.writeString(name);
         dest.writeString(description);
         dest.writeString(imageUrl);
-        dest.writeFloat(latitude);
-        dest.writeFloat(longitude);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
     }
 
     @SuppressWarnings("unused")
@@ -87,4 +109,16 @@ public class Attraction implements Parcelable {
             return new Attraction[size];
         }
     };
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("name", name);
+        result.put("description", description);
+        result.put("imageUrl", imageUrl);
+        result.put("latitude", latitude);
+        result.put("longitude", longitude);
+
+        return result;
+    }
 }
