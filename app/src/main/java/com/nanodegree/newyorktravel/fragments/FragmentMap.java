@@ -1,5 +1,6 @@
 package com.nanodegree.newyorktravel.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -23,11 +23,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.nanodegree.newyorktravel.R;
+import com.nanodegree.newyorktravel.activities.AttractionDetail;
 import com.nanodegree.newyorktravel.holders.Attraction;
 
-import java.util.ArrayList;
-
-public class FragmentMap extends Fragment{
+public class FragmentMap extends Fragment {
 
     private static final String TAG = FragmentMap.class.getSimpleName();
     private GoogleMap mMap;
@@ -54,7 +53,7 @@ public class FragmentMap extends Fragment{
      *
      * @param attractionId string attraction ID.
      */
-    public void setSelectedAttraction(String attractionId){
+    public void setSelectedAttraction(String attractionId) {
         changeSelectedAttractionRequestId = attractionId;
     }
 
@@ -67,8 +66,10 @@ public class FragmentMap extends Fragment{
     OnMapReadyCallback mapReadyCallback = new OnMapReadyCallback() {
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            Log.d(TAG, "onMapReady: ");
             mMap = googleMap;
+
+            //Add marker click callback so we can link
+            googleMap.setOnInfoWindowClickListener(markerClickListener);
 
             // Add a marker in NYC and move the camera
             LatLng nyc = new LatLng(40.7127837, -74.0059413);
@@ -83,21 +84,22 @@ public class FragmentMap extends Fragment{
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Log.d(TAG, "onDataChange: ");
                     LatLng selectedMarker = null;
-                    for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         Attraction attraction = postSnapshot.getValue(Attraction.class);
-                        if(attraction != null && attraction.getLatitude() != 0 && attraction.getLongitude() != 0) {
+                        if (attraction != null && attraction.getLatitude() != 0 && attraction.getLongitude() != 0) {
                             attraction.setId(postSnapshot.getKey());
                             LatLng markerLocation = new LatLng(attraction.getLatitude(), attraction.getLongitude());
                             Marker marker = mMap.addMarker(new MarkerOptions().position(markerLocation).title(attraction.getName()));
+                            marker.setTag(attraction);
                             //If we want a specific marker selected, let's show its window.
-                            if(changeSelectedAttractionRequestId != null && changeSelectedAttractionRequestId.equals(attraction.getId())){
+                            if (changeSelectedAttractionRequestId != null && changeSelectedAttractionRequestId.equals(attraction.getId())) {
                                 marker.showInfoWindow();
                                 selectedMarker = markerLocation;
                             }
                         }
                     }
 
-                    if(selectedMarker != null){
+                    if (selectedMarker != null) {
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(selectedMarker));
                         mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
                     }
@@ -108,6 +110,16 @@ public class FragmentMap extends Fragment{
                     Log.e(TAG, "onCancelled: ", databaseError.toException());
                 }
             });
+        }
+    };
+
+    GoogleMap.OnInfoWindowClickListener markerClickListener = new GoogleMap.OnInfoWindowClickListener() {
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+            //Open the attraction detail page.
+            Intent intent = new Intent(getActivity(), AttractionDetail.class);
+            intent.putExtra(AttractionDetail.TAG_ATTRACTION, (Attraction) marker.getTag());
+            getActivity().startActivityForResult(intent, AttractionDetail.ACTIVITY_DETAIL_REQ_CODE);
         }
     };
 }

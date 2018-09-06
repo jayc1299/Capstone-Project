@@ -74,12 +74,10 @@ public class FragmentAttractions extends Fragment {
     public void refreshData() {
         if (getActivity() != null && !getActivity().isFinishing()) {
             if (isShowFavourites()) {
-                Log.d(TAG, "Showing Favs");
                 DatabaseReference favsRef = database.getReference("favouriteAttractions");
                 Query favsQuery = favsRef.orderByChild("userId").equalTo(userUtils.getUserId(getActivity()));
                 favsQuery.addValueEventListener(attractionValueEventListener);
             } else {
-                Log.d(TAG, "Not showing Favs");
                 DatabaseReference attractionRef = database.getReference("attractions");
                 attractionRef.addValueEventListener(attractionValueEventListener);
             }
@@ -89,7 +87,6 @@ public class FragmentAttractions extends Fragment {
     ValueEventListener attractionValueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            Log.d(TAG, "onDataChange: ");
             ArrayList<Attraction> attractions = new ArrayList<>();
             for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                 Attraction attraction = postSnapshot.getValue(Attraction.class);
