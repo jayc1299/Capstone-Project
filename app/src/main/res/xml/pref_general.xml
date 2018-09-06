@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<CheckBoxPreference
+		android:title="@string/pref_favs_title"
+		android:defaultValue="false"
+		android:summary="@string/pref_favs_label"
+		android:key="@string/pref_favs_key" />
+</PreferenceScreen>

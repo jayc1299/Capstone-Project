@@ -9,7 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.nanodegree.newyorktravel.R;
@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_ATTRACTION_ID = "extra_attraction_id";
     public static final String EXTRA_GOTO_MAP = "extra_goto_map";
     public static final String EXTRA_GOTO_REVIEWS = "extra_goto_reviews";
+    public static final int SETTINGS_REQUEST_CODE = 2;
 
-    private static final String TAG = MainActivity.class.getSimpleName();
 
     private BottomNavigationView navigation;
     private FragmentAttractions fragmentAttractions;
@@ -53,26 +53,46 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intent = new Intent(this, ActivitySettings.class);
+                startActivityForResult(intent, SETTINGS_REQUEST_CODE);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //Activity detail may call for a page change.
-        if(resultCode == Activity.RESULT_OK && requestCode == AttractionDetail.ACTIVITY_DETAIL_REQ_CODE && data != null && data.hasExtra(EXTRA_ATTRACTION_ID)){
-            if(data.getBooleanExtra(EXTRA_GOTO_MAP, false)) {
-                if(data.hasExtra(EXTRA_ATTRACTION_ID)) {
+        if (resultCode == Activity.RESULT_OK && requestCode == AttractionDetail.ACTIVITY_DETAIL_REQ_CODE && data != null && data.hasExtra(EXTRA_ATTRACTION_ID)) {
+            if (data.getBooleanExtra(EXTRA_GOTO_MAP, false)) {
+                if (data.hasExtra(EXTRA_ATTRACTION_ID)) {
                     String selectedAttractionId = data.getStringExtra(EXTRA_ATTRACTION_ID);
                     fragmentMap.setSelectedAttraction(selectedAttractionId);
                 }
                 setFragment(fragmentMap);
                 navigation.setSelectedItemId(R.id.navigation_map);
-            }else if(data.getBooleanExtra(EXTRA_GOTO_REVIEWS, false)){
+            } else if (data.getBooleanExtra(EXTRA_GOTO_REVIEWS, false)) {
                 //We pass through an attraction ID, to tell the fragment what attraction to select.
-                if(data.hasExtra(EXTRA_ATTRACTION_ID)) {
+                if (data.hasExtra(EXTRA_ATTRACTION_ID)) {
                     String selectedAttractionId = data.getStringExtra(EXTRA_ATTRACTION_ID);
                     fragmentReviews.setSelectedAttraction(selectedAttractionId);
                 }
                 setFragment(fragmentReviews);
                 navigation.setSelectedItemId(R.id.navigation_reviews);
             }
+        }else if (resultCode == Activity.RESULT_OK && requestCode == SETTINGS_REQUEST_CODE){
+            fragmentAttractions.refreshData();
         }
     }
 
@@ -90,8 +110,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * This is only a temp userId as a full authentication session is outside the scope of this task.
      */
-    private void createUserId(){
-        Log.d(TAG, "createUserId: " + userUtils.getUserId(this));
+    private void createUserId() {
         if (TextUtils.isEmpty(userUtils.getUserId(this))) {
             userUtils.setUserId(this, UUID.randomUUID().toString());
         }

@@ -1,8 +1,9 @@
 package com.nanodegree.newyorktravel.fragments;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,11 +18,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.nanodegree.newyorktravel.R;
 import com.nanodegree.newyorktravel.activities.AttractionDetail;
 import com.nanodegree.newyorktravel.adapters.AttractionsAdapter;
 import com.nanodegree.newyorktravel.holders.Attraction;
+import com.nanodegree.newyorktravel.utils.UserUtils;
 
 import java.util.ArrayList;
 
@@ -30,6 +33,9 @@ public class FragmentAttractions extends Fragment {
     private static final String TAG = FragmentAttractions.class.getSimpleName();
     private RecyclerView recyclerView;
     private AttractionsAdapter adapter;
+    private SharedPreferences mPrefs;
+    private UserUtils userUtils;
+    private FirebaseDatabase database;
 
     @Nullable
     @Override
@@ -45,32 +51,15 @@ public class FragmentAttractions extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference attractionRef = database.getReference("attractions");
+        database = FirebaseDatabase.getInstance();
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        userUtils = new UserUtils();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new AttractionsAdapter(getActivity(), new ArrayList<Attraction>(), attractionListener);
         recyclerView.setAdapter(adapter);
 
-        attractionRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Attraction> attractions = new ArrayList<>();
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    Attraction attraction = postSnapshot.getValue(Attraction.class);
-                    if(attraction != null) {
-                        attraction.setId(postSnapshot.getKey());
-                        attractions.add(attraction);
-                    }
-                }
-                adapter.updateAttractions(attractions);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, "onCancelled: ", databaseError.toException());
-            }
-        });
+        refreshData();
     }
 
     @Override
@@ -78,10 +67,50 @@ public class FragmentAttractions extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    private boolean isShowFavourites() {
+        return mPrefs.getBoolean(getString(R.string.pref_favs_key), false);
+    }
+
+    public void refreshData() {
+        if (getActivity() != null && !getActivity().isFinishing()) {
+            if (isShowFavourites()) {
+                Log.d(TAG, "Showing Favs");
+                DatabaseReference favsRef = database.getReference("favouriteAttractions");
+                Query favsQuery = favsRef.orderByChild("userId").equalTo(userUtils.getUserId(getActivity()));
+                favsQuery.addValueEventListener(attractionValueEventListener);
+            } else {
+                Log.d(TAG, "Not showing Favs");
+                DatabaseReference attractionRef = database.getReference("attractions");
+                attractionRef.addValueEventListener(attractionValueEventListener);
+            }
+        }
+    }
+
+    ValueEventListener attractionValueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            Log.d(TAG, "onDataChange: ");
+            ArrayList<Attraction> attractions = new ArrayList<>();
+            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                Attraction attraction = postSnapshot.getValue(Attraction.class);
+                if (attraction != null) {
+                    attraction.setId(postSnapshot.getKey());
+                    attractions.add(attraction);
+                }
+            }
+            adapter.updateAttractions(attractions);
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+            Log.e(TAG, "onCancelled: ", databaseError.toException());
+        }
+    };
+
     AttractionsAdapter.AttractionListener attractionListener = new AttractionsAdapter.AttractionListener() {
         @Override
         public void onAttractionClicked(Attraction attraction) {
-            if(getActivity() != null && !getActivity().isFinishing()){
+            if (getActivity() != null && !getActivity().isFinishing()) {
                 Intent intent = new Intent(getActivity(), AttractionDetail.class);
                 intent.putExtra(AttractionDetail.TAG_ATTRACTION, attraction);
                 getActivity().startActivityForResult(intent, AttractionDetail.ACTIVITY_DETAIL_REQ_CODE);

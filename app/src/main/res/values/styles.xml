@@ -13,6 +13,11 @@
 		<item name="colorAccent">@color/colorAccent</item>
 	</style>
 
+	<style name="ToolbarColoredBackArrow" parent="AppTheme">
+		<item name="android:textColor">@color/white</item>
+		<item name="android:textColorSecondary">@color/white</item>
+	</style>
+
 	<style name="Header">
 		<item name="android:textSize">16sp</item>
 		<item name="android:textStyle">bold</item>
@@ -29,8 +34,4 @@
 		<item name="android:textColor">@drawable/text_selectable</item>
 		<item name="android:background">@drawable/btn_default</item>
 	</style>
-
-	<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-	<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

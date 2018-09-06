@@ -20,4 +20,11 @@
 	<string name="review_add_success_content">Review successfully added</string>
 	<string name="toast_favourite_toggle">Favourite Attraction Toggled</string>
     <string name="title_activity_settings">Settings</string>
+
+	<string name="pref_sort_key" translatable="false">sort_order</string>
+	<string name="pref_sort_label">Sort Order</string>
+	<string name="pref_sort_default" translatable="false">popularity.desc</string>
+	<string name="pref_favs_key" translatable="false">show_favourites</string>
+	<string name="pref_favs_title">Show Favourites</string>
+	<string name="pref_favs_label">Show only a list of your favourite attractions</string>
 </resources>
