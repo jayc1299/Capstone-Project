@@ -1,0 +1,81 @@
+{
+  "attractions" : {
+    "-LLi8UxDNqK6bC8K-dsb" : {
+      "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "imageUrl" : "https://guideandgo.com/image/cache/catalog/new-york/products/main-deck-ticket-empire-state-building/empire-state-building-3-1000x1000.jpg",
+      "latitude" : 40.7484,
+      "longitude" : -73.9857,
+      "name" : "Empire State Building"
+    },
+    "-LLi8UxTIKOIBIcCXWyD" : {
+      "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel tellus quis massa laoreet tincidunt eu non est. Etiam urna elit, finibus vitae elementum quis, suscipit ac sapien. Vivamus at magna arcu. Donec placerat, nisl sit amet posuere consequat, eros lectus molestie nunc, sit amet lacinia augue risus quis lorem. Mauris euismod libero vel tincidunt egestas. Morbi auctor tempor leo eget tristique. Duis eget urna in urna rutrum volutpat non et risus. Cras tincidunt purus sed orci varius, ut pharetra nisl facilisis. Pellentesque hendrerit, arcu sed convallis ornare, sapien justo luctus urna, et consectetur nulla tortor at sem. Suspendisse nec tortor non est vestibulum volutpat ut id massa. Aliquam erat volutpat. \n\n Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel tellus quis massa laoreet tincidunt eu non est. Etiam urna elit, finibus vitae elementum quis, suscipit ac sapien. Vivamus at magna arcu. Donec placerat, nisl sit amet posuere consequat, eros lectus molestie nunc, sit amet lacinia augue risus quis lorem. Mauris euismod libero vel tincidunt egestas. Morbi auctor tempor leo eget tristique. Duis eget urna in urna rutrum volutpat non et risus. Cras tincidunt purus sed orci varius, ut pharetra nisl facilisis. Pellentesque hendrerit, arcu sed convallis ornare, sapien justo luctus urna, et consectetur nulla tortor at sem. Suspendisse nec tortor non est vestibulum volutpat ut id massa. Aliquam erat volutpat. \n\n Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel tellus quis massa laoreet tincidunt eu non est. Etiam urna elit, finibus vitae elementum quis, suscipit ac sapien. Vivamus at magna arcu. Donec placerat, nisl sit amet posuere consequat, eros lectus molestie nunc, sit amet lacinia augue risus quis lorem. Mauris euismod libero vel tincidunt egestas. Morbi auctor tempor leo eget tristique. Duis eget urna in urna rutrum volutpat non et risus. Cras tincidunt purus sed orci varius, ut pharetra nisl facilisis. Pellentesque hendrerit, arcu sed convallis ornare, sapien justo luctus urna, et consectetur nulla tortor at sem. Suspendisse nec tortor non est vestibulum volutpat ut id massa. Aliquam erat volutpat.",
+      "imageUrl" : "https://media-cdn.tripadvisor.com/media/photo-s/0f/38/33/f6/beautiful-day-to-see.jpg",
+      "latitude" : 40.689247,
+      "longitude" : -74.044502,
+      "name" : "Statue Of Liberty"
+    },
+    "-LLi8UxV2SYbPsZIKJ5M" : {
+      "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "imageUrl" : "https://upload.wikimedia.org/wikipedia/commons/0/05/Southwest_corner_of_Central_Park%2C_looking_east%2C_NYC.jpg",
+      "latitude" : 40.785091,
+      "longitude" : -73.968285,
+      "name" : "Central Park"
+    },
+    "-LLiJc2Lai3oscQtXau0" : {
+      "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "imageUrl" : "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/New_york_times_square-terabass.jpg/1200px-New_york_times_square-terabass.jpg",
+      "latitude" : 40.7589,
+      "longitude" : -73.9851,
+      "name" : "Times Square"
+    },
+    "-LLiJc2PV3_pipD-cIrn" : {
+      "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "imageUrl" : "https://us-east.manta.joyent.com/condenast/public/cnt-services/production/2015/08/18/55d362f437284fb1079ccc50_metropolitan-museum-of-art-new-york-city.jpg",
+      "latitude" : 40.761343,
+      "longitude" : -73.977821,
+      "name" : "Metropolitan Museum of Art"
+    }
+  },
+  "favouriteAttractions" : {
+    "-LLjZrxsdl1GJS7n7y_f" : {
+      "attractionId" : "-LLi8UxDNqK6bC8K-dsb",
+      "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "imageUrl" : "https://guideandgo.com/image/cache/catalog/new-york/products/main-deck-ticket-empire-state-building/empire-state-building-3-1000x1000.jpg",
+      "isFavourite" : false,
+      "latitude" : -5.874274590033133E-28,
+      "longitude" : 3.0683467388153076,
+      "name" : "Empire State Building",
+      "userId" : "03c2c0e2-b29a-4802-88bb-f443d534e103"
+    },
+    "-LLj_dgoFK9ZlKOtliFi" : {
+      "attractionId" : "-LLi8UxTIKOIBIcCXWyD",
+      "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel tellus quis massa laoreet tincidunt eu non est. Etiam urna elit, finibus vitae elementum quis, suscipit ac sapien. Vivamus at magna arcu. Donec placerat, nisl sit amet posuere consequat, eros lectus molestie nunc, sit amet lacinia augue risus quis lorem. Mauris euismod libero vel tincidunt egestas. Morbi auctor tempor leo eget tristique. Duis eget urna in urna rutrum volutpat non et risus. Cras tincidunt purus sed orci varius, ut pharetra nisl facilisis. Pellentesque hendrerit, arcu sed convallis ornare, sapien justo luctus urna, et consectetur nulla tortor at sem. Suspendisse nec tortor non est vestibulum volutpat ut id massa. Aliquam erat volutpat. \n\n Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel tellus quis massa laoreet tincidunt eu non est. Etiam urna elit, finibus vitae elementum quis, suscipit ac sapien. Vivamus at magna arcu. Donec placerat, nisl sit amet posuere consequat, eros lectus molestie nunc, sit amet lacinia augue risus quis lorem. Mauris euismod libero vel tincidunt egestas. Morbi auctor tempor leo eget tristique. Duis eget urna in urna rutrum volutpat non et risus. Cras tincidunt purus sed orci varius, ut pharetra nisl facilisis. Pellentesque hendrerit, arcu sed convallis ornare, sapien justo luctus urna, et consectetur nulla tortor at sem. Suspendisse nec tortor non est vestibulum volutpat ut id massa. Aliquam erat volutpat. \n\n Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel tellus quis massa laoreet tincidunt eu non est. Etiam urna elit, finibus vitae elementum quis, suscipit ac sapien. Vivamus at magna arcu. Donec placerat, nisl sit amet posuere consequat, eros lectus molestie nunc, sit amet lacinia augue risus quis lorem. Mauris euismod libero vel tincidunt egestas. Morbi auctor tempor leo eget tristique. Duis eget urna in urna rutrum volutpat non et risus. Cras tincidunt purus sed orci varius, ut pharetra nisl facilisis. Pellentesque hendrerit, arcu sed convallis ornare, sapien justo luctus urna, et consectetur nulla tortor at sem. Suspendisse nec tortor non est vestibulum volutpat ut id massa. Aliquam erat volutpat.",
+      "imageUrl" : "https://media-cdn.tripadvisor.com/media/photo-s/0f/38/33/f6/beautiful-day-to-see.jpg",
+      "isFavourite" : true,
+      "latitude" : 0.4490880072116852,
+      "longitude" : 3.067884683609009,
+      "name" : "Statue Of Liberty",
+      "userId" : "03c2c0e2-b29a-4802-88bb-f443d534e103"
+    }
+  },
+  "reviews" : {
+    "-LLircst7YlXJhZl-btm" : {
+      "attractionId" : "-LLi8UxDNqK6bC8K-dsb",
+      "content" : "test",
+      "reviewScore" : 2.5,
+      "title" : "test"
+    },
+    "-LLiu1BnxsG-5Zx4CDdv" : {
+      "attractionId" : "-LLi8UxTIKOIBIcCXWyD",
+      "content" : "it is great",
+      "reviewScore" : 4,
+      "title" : "I love the Statue Of Liberty"
+    },
+    "-LLjJ5XiYeU9bhpoduEn" : {
+      "attractionId" : "-LLi8UxDNqK6bC8K-dsb",
+      "content" : "I love this place, the view from the top is incredible. The stay are really very friendly and the lift is super cool.",
+      "reviewScore" : 5,
+      "title" : "Amazing views"
+    }
+  }
+}
