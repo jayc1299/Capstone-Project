@@ -20,6 +20,8 @@
 	<string name="review_add_success_content">Review successfully added</string>
 	<string name="toast_favourite_toggle">Favourite Attraction Toggled</string>
 	<string name="title_activity_settings">Settings</string>
+	<string name="action_share">Share</string>
+	<string name="action_share_text">I\'m loving this attraction&#160;</string>
 
     <string name="unkown_error_title">Error</string>
     <string name="unknown_error_msg">Sorry there has been an unknown error.</string>

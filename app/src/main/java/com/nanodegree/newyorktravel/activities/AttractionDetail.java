@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -46,6 +49,7 @@ public class AttractionDetail extends AppCompatActivity {
 
     private ImageView favouriteView;
     private RatingBar starRating;
+	private ShareActionProvider mShareActionProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +122,19 @@ public class AttractionDetail extends AppCompatActivity {
         });
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_share, menu);
+		MenuItem menuItem = menu.findItem(R.id.action_share);
+
+		// Get the provider and hold onto it to set/change the share intent.
+		mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+
+		setShareIntent();
+		return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -137,7 +154,8 @@ public class AttractionDetail extends AppCompatActivity {
         ImageView img = findViewById(R.id.activity_detail_imageview);
 
         if (!TextUtils.isEmpty(attraction.getImageUrl())) {
-            Picasso.get().load(attraction.getImageUrl()).into(img);
+        	int imgDp = (int) getResources().getDimension(R.dimen.large_image_size);
+            Picasso.get().load(attraction.getImageUrl()).resize(imgDp, imgDp).into(img);
             img.setContentDescription(attraction.getName());
         }
     }
@@ -248,4 +266,17 @@ public class AttractionDetail extends AppCompatActivity {
             }
         });
     }
+
+	private void setShareIntent() {
+		Intent sendIntent = new Intent();
+		sendIntent.setAction(Intent.ACTION_SEND);
+		if(attraction != null) {
+			sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.action_share_text) + attraction.getName());
+		}
+		sendIntent.setType("text/plain");
+
+		if (mShareActionProvider != null) {
+			mShareActionProvider.setShareIntent(sendIntent);
+		}
+	}
 }

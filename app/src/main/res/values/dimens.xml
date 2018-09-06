@@ -13,6 +13,7 @@
 
 	<dimen name="small_image_height">100dp</dimen>
 	<dimen name="small_image_width">100dp</dimen>
+	<dimen name="large_image_size">400dp</dimen>
 
 	<dimen name="btn_shape_line_width">3dp</dimen>
 	<dimen name="btn_shape_corner_radius">5dp</dimen>
