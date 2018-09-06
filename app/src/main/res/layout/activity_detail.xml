@@ -104,7 +104,7 @@
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
                         android:numStars="5"
-                        android:stepSize="1.0" />
+                        android:isIndicator="true" />
                 </LinearLayout>
             </LinearLayout>
 
