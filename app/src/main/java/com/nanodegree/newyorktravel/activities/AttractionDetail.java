@@ -1,6 +1,8 @@
 package com.nanodegree.newyorktravel.activities;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -30,6 +32,7 @@ import com.nanodegree.newyorktravel.holders.FavouriteAttraction;
 import com.nanodegree.newyorktravel.holders.Review;
 import com.nanodegree.newyorktravel.utils.UiUitls;
 import com.nanodegree.newyorktravel.utils.UserUtils;
+import com.nanodegree.newyorktravel.widgets.FavsWidget;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -169,6 +172,10 @@ public class AttractionDetail extends AppCompatActivity {
     private void updateFavouriteStatus() {
         //Get only favourites for this user.
         Query favsQuery = favsRef.orderByChild("userId").equalTo(userUtils.getUserId(this));
+
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, FavsWidget.class));
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.wdiget_list_view);
 
         favsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
