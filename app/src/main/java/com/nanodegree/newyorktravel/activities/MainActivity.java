@@ -1,18 +1,21 @@
 package com.nanodegree.newyorktravel.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.nanodegree.newyorktravel.R;
+import com.nanodegree.newyorktravel.async.NetworkAsync;
 import com.nanodegree.newyorktravel.fragments.FragmentAttractions;
 import com.nanodegree.newyorktravel.fragments.FragmentMap;
 import com.nanodegree.newyorktravel.fragments.FragmentReviews;
@@ -27,17 +30,20 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_GOTO_REVIEWS = "extra_goto_reviews";
     public static final int SETTINGS_REQUEST_CODE = 2;
 
-
     private BottomNavigationView navigation;
     private FragmentAttractions fragmentAttractions;
     private FragmentMap fragmentMap;
     private FragmentReviews fragmentReviews;
     private UserUtils userUtils;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        NetworkAsync networkAsync = new NetworkAsync(networkListener);
+        networkAsync.execute();
 
         userUtils = new UserUtils();
         createUserId();
@@ -45,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-		fragmentAttractions = new FragmentAttractions();
-		fragmentMap = new FragmentMap();
-		fragmentReviews = new FragmentReviews();
+        fragmentAttractions = new FragmentAttractions();
+        fragmentMap = new FragmentMap();
+        fragmentReviews = new FragmentReviews();
 
         if (savedInstanceState == null) {
             setFragment(fragmentAttractions);
@@ -93,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 setFragment(fragmentReviews);
                 navigation.setSelectedItemId(R.id.navigation_reviews);
             }
-        }else if (resultCode == Activity.RESULT_OK && requestCode == SETTINGS_REQUEST_CODE){
+        } else if (resultCode == Activity.RESULT_OK && requestCode == SETTINGS_REQUEST_CODE) {
             fragmentAttractions.refreshData();
         }
     }
@@ -133,6 +139,37 @@ public class MainActivity extends AppCompatActivity {
                     return true;
             }
             return false;
+        }
+    };
+
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+    private NetworkAsync.NetworkAsyncListener networkListener = new NetworkAsync.NetworkAsyncListener() {
+        @Override
+        public void showProgressDialog(boolean show) {
+            if (!MainActivity.this.isFinishing()) {
+                if (show) {
+                    dialog = new ProgressDialog(MainActivity.this);
+                    dialog.setMessage(getString(R.string.loading));
+                    dialog.setCancelable(false);
+                    dialog.show();
+                } else {
+                    if (dialog != null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void isInternetOk(boolean isOk) {
+            if (!isOk) {
+                AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                        .setTitle(getString(R.string.no_internet_title))
+                        .setMessage(getString(R.string.no_internet_msg))
+                        .create();
+                dialog.show();
+            }
         }
     };
 }

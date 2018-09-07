@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,6 +36,8 @@ public class FragmentAttractions extends Fragment {
     private static final String TAG = FragmentAttractions.class.getSimpleName();
     private RecyclerView recyclerView;
     private AttractionsAdapter adapter;
+    private TextView emptyView;
+
     private SharedPreferences mPrefs;
     private UserUtils userUtils;
     private FirebaseDatabase database;
@@ -49,6 +52,7 @@ public class FragmentAttractions extends Fragment {
         View view = inflater.inflate(R.layout.fragment_attractions, container, false);
 
         recyclerView = view.findViewById(R.id.frag_attractions_recycler);
+        emptyView = view.findViewById(R.id.fragment_attractions_empty);
 
         return view;
     }
@@ -118,6 +122,14 @@ public class FragmentAttractions extends Fragment {
                 }
             }
             adapter.updateAttractions(attractions);
+
+            if(attractions.size() > 0){
+                recyclerView.setVisibility(View.VISIBLE);
+                emptyView.setVisibility(View.GONE);
+            }else{
+                recyclerView.setVisibility(View.GONE);
+                emptyView.setVisibility(View.VISIBLE);
+            }
 
 			if (layoutManagerSavedState != null) {
 				recyclerView.getLayoutManager().onRestoreInstanceState(layoutManagerSavedState);

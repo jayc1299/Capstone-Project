@@ -4,6 +4,7 @@
     <string name="tab_map">Maps</string>
     <string name="tab_reviews">Reviews</string>
     <string name="no_reviews_found">Sorry. We can\'t find any reviews for that attraction.</string>
+    <string name="no_attractions_found">Sorry. We can\'t find any attractions.</string>
     <string name="title_activity_maps">Map</string>
     <string name="activity_detail_attraction_alt">Attraction image</string>
     <string name="activity_detail_view_on_map">View On Map</string>
@@ -31,6 +32,9 @@
     <string name="pref_favs_key" translatable="false">show_favourites</string>
     <string name="pref_favs_title">Show Favourites</string>
     <string name="pref_favs_label">Show only a list of your favourite attractions</string>
-    <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+
+    <string name="loading">Loading&#8230;</string>
+    <string name="no_internet_title">No Connection</string>
+    <string name="no_internet_msg">We\'ve been unable to detect a reliable internet connection. Please try again.</string>
 </resources>
